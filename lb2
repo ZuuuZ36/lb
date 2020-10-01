@@ -1,0 +1,173 @@
+#include <iostream>
+#include <stack>
+#include <string>
+
+class Tovar
+{   
+private:
+    
+    int m_id;
+    std::string m_tovarname;
+	double  m_cost;
+public:
+    friend class Prod;
+
+	Wear() {  };
+    Wear (int id,std::string name)
+    {
+        
+		m_id = id;
+		m_tovarname = name;
+		m_cost = 0;
+    }
+	friend  void show(Tovar& name);
+	~Tovar() {};
+};
+class Prod
+{
+private:
+	int m_prodid;
+	std::string m_prodname;
+	std::string m_prodfam;
+public:
+	Prod();
+	Prod(int id, std::string name, std::string fam)
+	{
+		m_prodid = id;
+		m_prodname = name;
+		m_prodfam = fam;
+	}
+	friend void showTov(Prod& name);
+	
+    void setCost(Tovar &name,double cost)
+    {	
+		name.m_cost = cost;
+	
+    }
+
+	~Prod() {};
+};
+
+void show(Tovar& name)
+{
+	std::cout << std::endl;
+	std::cout << "Tovar data:  " << std::endl;
+	std::cout << "id:  " <<name.m_id << std::endl;
+	std::cout << "name:  " << name.m_tovarname << std::endl;
+	std::cout << "cost:  " << name.m_cost << std::endl;
+
+}
+void showPro(Prod& name)
+{
+	std::cout << std::endl;
+	std::cout << "Prod data:  " << std::endl;
+	std::cout << "id: " << name.m_prodid << std::endl;
+	std::cout << "name: " <<name.m_prodname << std::endl;
+	std::cout << "fam: " << name.m_prodfam << std::endl;
+
+}
+int main()
+{	
+	bool fid = true;
+	bool fname = true;
+	bool ffam = true;
+	bool fcost= true;
+	
+	setlocale(LC_ALL, "rus");
+	int id;
+	std::string name,fam;
+	double cost;
+	std::cout << "Tovar info: ";
+	
+	do
+	{
+		std::cout << "id: ";
+		std::cin >> id;
+		if (std::cin.fail())
+			std::cout << "error" << std::endl;
+		else
+			fid = false;
+		std::cin.clear();
+		std::cin.ignore(std::cin.rdbuf()->in_avail());
+	} while (fid);
+
+	do
+	{
+			std::cout << "name: ";
+			std::cin >> name;
+		if (std::cin.fail())
+			std::cout << "error" << std::endl;
+		else
+			fname = false;
+		std::cin.clear();
+		std::cin.ignore(std::cin.rdbuf()->in_avail());
+	} while (fname);
+
+	Tovar w1(id, name);
+	show(w1);
+	std::cout << "Prod info: ";
+	do
+	{
+		std::cout << "id: ";
+		std::cin >> id;
+		if (std::cin.fail())
+			std::cout << "error" << std::endl;
+		else
+			fid = false;
+		std::cin.clear();
+		std::cin.ignore(std::cin.rdbuf()->in_avail());
+	} while (fid);
+	do
+	{
+		std::cout << "name: ";
+		std::cin >> name;
+		if (std::cin.fail())
+			std::cout << "error" << std::endl;
+		else
+			fname = false;
+		std::cin.clear();
+		std::cin.ignore(std::cin.rdbuf()->in_avail());
+	} while (fname);
+	do
+	{
+		std::cout << "fam: ";
+		std::cin >> fam;
+		if (std::cin.fail())
+			std::cout << "error" << std::endl;
+		else
+			ffam = false;
+		std::cin.clear();
+		std::cin.ignore(std::cin.rdbuf()->in_avail());
+	} while (ffam);
+	Prod t1(id, name, fam);
+	showPro(t1);
+	std::cout << "Set cost:  ";
+	std::cin >> cost;
+	t1.setCost(w1, cost);
+	show(w1);
+	Tovar mas[3] =
+		{
+			Tovar(14,"blouse"),
+				Tovar(18,"hat"),
+				Tovar(77,"dress"),
+		};
+	Prod ms[3] =
+	{
+		Prod(50,"Тима","Белорусских"),
+		Prod(51,"Михаил","Круг"),
+		Prod(52,"Игорь","Лосик")
+	};
+	
+	for (int i = 0; i < 3; i++)
+	{
+		std::cout << std::endl;
+		showPro(ms[i]);
+		ms[i].setCost(mas[i], rand() % 20);
+
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		show(mas[i]);
+	}
+    return 0;
+}
